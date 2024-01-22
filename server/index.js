@@ -29,18 +29,20 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     // collections
-    const usersCollection = client.db("house-hunter").collection("users");
+    const userCollection = client.db("house-hunter").collection("users");
+    const BookingCollection = client.db("house-hunter").collection("Bookings");
+    const houseCollection = client.db("house-hunter").collection("houses");
 
     // registration api
     app.post("/v1/register", async (req, res) => {
       const { email, password, name, number, role } = req.body;
-      const user = await usersCollection.findOne({ email });
+      const user = await userCollection.findOne({ email });
       if (user) {
         res
           .status(400)
           .json({ success: false, message: "User already exists" });
       } else {
-        const newUser = await usersCollection.insertOne({
+        const newUser = await userCollection.insertOne({
           email,
           password,
           name,
@@ -56,10 +58,10 @@ async function run() {
     // login api
     app.put("/v1/login", async (req, res) => {
       const { email, password } = req.body;
-      const user = await usersCollection.findOne({ email });
+      const user = await userCollection.findOne({ email });
       if (user) {
         if (user.password === password) {
-          const result = await usersCollection.updateOne(
+          const result = await userCollection.updateOne(
             { email },
             { $set: { isLoggedIn: true } }
           );
@@ -90,7 +92,7 @@ async function run() {
     // logout api
     app.put("/v1/logout", async (req, res) => {
       const { email } = req.body;
-      const result = await usersCollection.updateOne(
+      const result = await userCollection.updateOne(
         { email },
         { $set: { isLoggedIn: false } }
       );
