@@ -108,8 +108,16 @@ async function run() {
 
     // get all houses api
     app.get("/v1/houses", async (req, res) => {
-      const result = await houseCollection.find().toArray();
-      res.status(200).send(result);
+      const cursor = parseInt(req.query.cursor) || 0;
+      const pageSize = 10;
+      const data = await houseCollection
+        .find({})
+        .skip(cursor)
+        .limit(pageSize)
+        .toArray();
+      res.send({ data });
+      // const result = await houseCollection.find().toArray();
+      // res.status(200).send(result);
     });
     // add house api
     app.post("/v1/houses", async (req, res) => {
@@ -145,7 +153,7 @@ async function run() {
       });
       res.status(200).send(result);
     });
-    // // add multiple houses api
+    // add multiple houses api
     // app.post("/v1/houses/bulk", async (req, res) => {
     //   const result = await houseCollection.insertMany(req.body);
     //   res.status(200).send(result);
