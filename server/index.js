@@ -111,7 +111,127 @@ async function run() {
       const result = await houseCollection.find().toArray();
       res.status(200).send(result);
     });
-
+    // add house api
+    app.post("/v1/houses", async (req, res) => {
+      const {
+        email,
+        name,
+        address,
+        city,
+        bedrooms,
+        bathrooms,
+        roomSize,
+        imgURL,
+        availabilityDate,
+        rent,
+        number,
+        title,
+        description,
+      } = req.body;
+      const result = await houseCollection.insertOne({
+        email,
+        name,
+        address,
+        city,
+        bedrooms,
+        bathrooms,
+        roomSize,
+        imgURL,
+        availabilityDate,
+        rent,
+        number,
+        title,
+        description,
+      });
+      res.status(200).send(result);
+    });
+    // // add multiple houses api
+    // app.post("/v1/houses/bulk", async (req, res) => {
+    //   const result = await houseCollection.insertMany(req.body);
+    //   res.status(200).send(result);
+    // });
+    // get house by id api
+    app.get("/v1/houses/:id", async (req, res) => {
+      const result = await houseCollection.findOne({
+        _id: new ObjectId(req.params.id),
+      });
+      res.status(200).send(result);
+    });
+    // update house by id api
+    app.put("/v1/houses/:id", async (req, res) => {
+      const {
+        email,
+        name,
+        address,
+        city,
+        bedrooms,
+        bathrooms,
+        roomSize,
+        imgURL,
+        availabilityDate,
+        rent,
+        number,
+        title,
+        description,
+      } = req.body;
+      const result = await houseCollection.updateOne(
+        { _id: new ObjectId(req.params.id) },
+        {
+          $set: {
+            email,
+            name,
+            address,
+            city,
+            bedrooms,
+            bathrooms,
+            roomSize,
+            imgURL,
+            availabilityDate,
+            rent,
+            number,
+            title,
+            description,
+          },
+        }
+      );
+      res.status(200).send(result);
+    });
+    // delete house by id api
+    app.delete("/v1/houses/:id", async (req, res) => {
+      const result = await houseCollection.deleteOne({
+        _id: new ObjectId(req.params.id),
+      });
+      res.status(200).send(result);
+    });
+    // book house by email api
+    app.post("/v1/bookings", async (req, res) => {
+      const {
+        houseId,
+        title,
+        rent,
+        address,
+        renterName,
+        renterNumber,
+        renterEmail,
+      } = req.body;
+      const result = await BookingCollection.insertOne({
+        houseId,
+        title,
+        rent,
+        address,
+        renterName,
+        renterNumber,
+        renterEmail,
+      });
+      res.status(200).send(result);
+    });
+    // delete booking by id api
+    app.delete("/v1/bookings/:id", async (req, res) => {
+      const result = await BookingCollection.deleteOne({
+        _id: new ObjectId(req.params.id),
+      });
+      res.status(200).send(result);
+    });
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!"
     );
