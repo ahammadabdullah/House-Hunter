@@ -35,7 +35,7 @@ const Home = () => {
   }, [inView]);
   return (
     <div className="max-w-7xl mx-auto">
-      <div className="grid gap-5 grid-cols-3 p-5">
+      <div className="grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 p-5">
         {data?.pages?.map((group, i) => (
           <Fragment key={i}>
             {group?.data?.map((house) => (
