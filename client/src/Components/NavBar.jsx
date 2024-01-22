@@ -1,6 +1,9 @@
 import { Link, NavLink } from "react-router-dom";
+import useAuth from "../Hooks/useAuth";
 
 const NavBar = () => {
+  const { user, logout } = useAuth();
+  console.log(user, "user");
   return (
     <div className="bg-fill">
       <div className="py-5  flex items-center justify-between max-w-7xl mx-auto">
@@ -35,16 +38,25 @@ const NavBar = () => {
           </NavLink>
         </div>
         <div>
-          <NavLink
-            className={({ isActive }) =>
-              isActive
-                ? "bg-secondary text-primary p-2 rounded-md font-medium"
-                : "p-2 hover:text-primary hover:bg-secondary hover:font-medium rounded-md"
-            }
-            to="/login"
-          >
-            Login
-          </NavLink>
+          {user ? (
+            <button
+              onClick={() => logout()}
+              className="p-2 hover:text-primary hover:bg-secondary hover:font-medium rounded-md"
+            >
+              {user?.name}
+            </button>
+          ) : (
+            <NavLink
+              className={({ isActive }) =>
+                isActive
+                  ? "bg-secondary text-primary p-2 rounded-md font-medium"
+                  : "p-2 hover:text-primary hover:bg-secondary hover:font-medium rounded-md"
+              }
+              to="/login"
+            >
+              Login
+            </NavLink>
+          )}
         </div>
       </div>
     </div>

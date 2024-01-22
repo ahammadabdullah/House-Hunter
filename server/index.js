@@ -105,6 +105,20 @@ async function run() {
         .status(200)
         .send({ success: true, message: "Logout successful" });
     });
+    // get user by email api
+    app.get("/v1/users/:email", async (req, res) => {
+      const projection = {
+        password: 0,
+      };
+      const result = await userCollection.findOne(
+        {
+          email: req.params.email,
+        },
+        { projection }
+      );
+      console.log(result);
+      res.status(200).send(result);
+    });
 
     // get all houses api
     app.get("/v1/houses", async (req, res) => {
