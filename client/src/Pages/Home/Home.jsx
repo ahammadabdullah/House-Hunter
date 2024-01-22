@@ -27,12 +27,6 @@ const Home = () => {
       }
       return lastPageParam + 10;
     },
-    getPreviousPageParam: (firstPage, allPages, firstPageParam) => {
-      if (firstPageParam <= 10) {
-        return undefined;
-      }
-      return firstPageParam - 10;
-    },
   });
   useEffect(() => {
     if (inView) {
