@@ -40,7 +40,7 @@ async function run() {
       if (user) {
         res
           .status(400)
-          .json({ success: false, message: "User already exists" });
+          .send({ success: false, message: "User already exists" });
       } else {
         const newUser = await userCollection.insertOne({
           email,
@@ -52,7 +52,7 @@ async function run() {
         });
         res
           .status(200)
-          .json({ success: true, message: "User created successfully" });
+          .send({ success: true, message: "User created successfully" });
       }
     });
     // login api
@@ -79,14 +79,14 @@ async function run() {
               secure: false,
               sameSite: "none",
             })
-            .json({ success: true, message: "Login successful" });
+            .send({ success: true, message: "Login successful" });
         } else {
           res
             .status(400)
-            .json({ success: false, message: "Wrong Credentials" });
+            .send({ success: false, message: "Wrong Credentials" });
         }
       } else {
-        res.status(400).json({ success: false, message: "Wrong Credentials" });
+        res.status(400).send({ success: false, message: "Wrong Credentials" });
       }
     });
     // logout api
@@ -103,7 +103,13 @@ async function run() {
           sameSite: "none",
         })
         .status(200)
-        .json({ success: true, message: "Logout successful" });
+        .send({ success: true, message: "Logout successful" });
+    });
+
+    // get all houses api
+    app.get("/v1/houses", async (req, res) => {
+      const result = await houseCollection.find().toArray();
+      res.status(200).send(result);
     });
 
     console.log(
