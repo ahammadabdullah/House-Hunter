@@ -1,7 +1,7 @@
 const Register = () => {
   return (
     <div>
-      <h3>registration page</h3>
+      <h3>Welcome to House Hunter</h3>
     </div>
   );
 };
