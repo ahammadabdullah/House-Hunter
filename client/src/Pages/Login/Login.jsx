@@ -17,7 +17,6 @@ const Login = () => {
     };
 
     const res = await loginWithEmail(loginInfo);
-    console.log(res);
     if (res.success === true) {
       toast.success("Login Successful");
       navigate("/dashboard");

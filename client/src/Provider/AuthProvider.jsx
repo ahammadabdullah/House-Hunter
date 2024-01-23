@@ -11,7 +11,6 @@ const AuthProvider = ({ children }) => {
   const loginWithEmail = async (loginInfo) => {
     try {
       const res = await axiosPublic.put("/login", loginInfo);
-      console.log(res);
       if (res.status === 200) {
         const uData = await axiosPublic.get(`/users/${loginInfo.email}`);
         localStorage.setItem("email", loginInfo.email);

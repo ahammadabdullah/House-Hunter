@@ -4,7 +4,6 @@ import { toast } from "react-hot-toast";
 const BookingCard = ({ detail, refetch }) => {
   const handleDeleteBooking = async () => {
     const res = await deleteBooking(detail._id);
-    console.log(res);
     if (res.deletedCount) {
       toast.success("Booking Deleted Successfully");
       refetch();

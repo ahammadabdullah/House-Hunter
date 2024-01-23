@@ -8,7 +8,6 @@ const PrivateRoute = ({ children }) => {
     return <h3 className="text-center">Loading...</h3>;
   }
   if (!user) {
-    console.log(loading);
     return <Navigate to="/login" />;
   }
   return children;

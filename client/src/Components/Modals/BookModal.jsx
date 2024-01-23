@@ -35,7 +35,6 @@ const BookModal = ({ house, isOpen, closeBookModal }) => {
       toast.error("Something Went Wrong");
     }
     closeBookModal();
-    console.log(res);
   };
   return (
     <>

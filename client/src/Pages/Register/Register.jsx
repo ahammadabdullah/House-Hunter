@@ -35,8 +35,6 @@ const Register = () => {
     } else {
       toast.error(res.response.data.message);
     }
-    // closeAddModal();
-    console.log(res);
   };
 
   return (

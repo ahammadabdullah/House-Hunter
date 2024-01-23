@@ -50,7 +50,6 @@ const EditModal = ({ isOpen, closeEditModal, house, refetch }) => {
       toast.error("Something Went Wrong");
     }
     closeEditModal();
-    console.log(res);
   };
   return (
     <>

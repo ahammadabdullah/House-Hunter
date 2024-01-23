@@ -3,7 +3,6 @@ import useAuth from "../Hooks/useAuth";
 import ProfileDropDown from "./ProfileDropDown";
 const NavBar = () => {
   const { user } = useAuth();
-  console.log(user, "user");
   return (
     <div className="bg-fill">
       <div className="py-5  flex items-center justify-between max-w-7xl mx-auto">
@@ -26,16 +25,18 @@ const NavBar = () => {
           >
             Home
           </NavLink>
-          <NavLink
-            className={({ isActive }) =>
-              isActive
-                ? "bg-secondary text-primary p-2 rounded-md font-medium"
-                : "p-2 hover:text-primary hover:bg-secondary hover:font-medium rounded-md"
-            }
-            to="/dashboard"
-          >
-            Dashboard
-          </NavLink>
+          {user && (
+            <NavLink
+              className={({ isActive }) =>
+                isActive
+                  ? "bg-secondary text-primary p-2 rounded-md font-medium"
+                  : "p-2 hover:text-primary hover:bg-secondary hover:font-medium rounded-md"
+              }
+              to="/dashboard"
+            >
+              Dashboard
+            </NavLink>
+          )}
         </div>
         <div>
           {user ? (

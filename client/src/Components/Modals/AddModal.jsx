@@ -50,7 +50,6 @@ const AddModal = ({ isOpen, closeAddModal, refetch }) => {
       toast.error("Something Went Wrong");
     }
     closeAddModal();
-    console.log(res);
   };
   return (
     <>

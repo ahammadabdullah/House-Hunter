@@ -5,7 +5,6 @@ import MultiRangeSlider from "./multiRangeSlider/MultiRangeSlider";
 const FilterDropDown = ({ setFilter, setRange }) => {
   const handleRangeSliderChange = (min, max) => {
     setRange(`${min}-${max}`);
-    console.log(`${min}-${max}`);
   };
   return (
     <div className="text-right w-[150px] ">
