@@ -26,15 +26,15 @@ const TableRow = ({ house, refetch }) => {
   }
   return (
     <>
-      <tr class="border-b bg-fill text-black">
-        <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap ">
+      <tr className="border-b bg-fill text-black">
+        <th scope="row" className="px-6 py-4 font-medium whitespace-nowrap ">
           {title}
         </th>
-        <td class="px-6 py-4">
+        <td className="px-6 py-4">
           <img className="w-14" src={imgURL} alt="" />
         </td>
-        <td class="px-6 py-4">{address}</td>
-        <td class="px-6 py-4">
+        <td className="px-6 py-4">{address}</td>
+        <td className="px-6 py-4">
           <button
             className="bg-secondary p-2 rounded hover:text-primary"
             onClick={openEditModal}
@@ -42,7 +42,7 @@ const TableRow = ({ house, refetch }) => {
             Edit
           </button>
         </td>
-        <td class="px-6 py-4">
+        <td className="px-6 py-4">
           <button
             className="bg-secondary p-2 rounded hover:text-primary"
             onClick={handleDelete}

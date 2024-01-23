@@ -1,10 +1,15 @@
 import { useState } from "react";
 import BookModal from "../../Components/Modals/BookModal";
 import useAuth from "../../Hooks/useAuth";
+import toast from "react-hot-toast";
+import useGetBooking from "../../Hooks/useGetBooking";
+import { useNavigate } from "react-router-dom";
 
 const HouseCard = ({ house }) => {
   const { user } = useAuth();
+  const { data, refetch } = useGetBooking();
   let [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
   function closeBookModal() {
     setIsOpen(false);
   }
@@ -12,6 +17,22 @@ const HouseCard = ({ house }) => {
   function openBookModal() {
     setIsOpen(true);
   }
+  const handleOpenBookModal = () => {
+    if (!user) {
+      toast.error("You need to login first");
+      navigate("/login");
+    } else if (user?.email === house?.email) {
+      toast.error("You can't book your own house");
+    } else if (user?.role === "owner") {
+      toast.error("You can't book a house as an owner");
+    } else if (user?.email === house?.email) {
+      toast.error("You can't book your own house");
+    } else if (data.length === 2) {
+      toast.error("You can't book more than 2 houses");
+    } else {
+      openBookModal();
+    }
+  };
   const {
     email,
     name,
@@ -53,9 +74,9 @@ const HouseCard = ({ house }) => {
         </div>
         <div className="flex justify-center pt-3">
           <button
-            disabled={email === user?.email}
+            // disabled={email === user?.email}
             className="p-2 bg-secondary hover:bg-secondary hover:text-primary rounded-md "
-            onClick={openBookModal}
+            onClick={handleOpenBookModal}
           >
             Book
           </button>

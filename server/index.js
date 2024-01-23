@@ -249,6 +249,13 @@ async function run() {
       });
       res.status(200).send(result);
     });
+    // get bookings by email api
+    app.get("/v1/bookings/:email", async (req, res) => {
+      const result = await BookingCollection.find({
+        renterEmail: req.params.email,
+      }).toArray();
+      res.status(200).send(result);
+    });
     // delete booking by id api
     app.delete("/v1/bookings/:id", async (req, res) => {
       const result = await BookingCollection.deleteOne({

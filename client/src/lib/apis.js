@@ -31,3 +31,13 @@ export const bookHouse = async (bookingData) => {
   const { data } = await axiosSecure.post(`/bookings`, bookingData);
   return data;
 };
+
+export const getBookings = async (email) => {
+  const { data } = await axiosSecure.get(`/bookings/${email}`);
+  return data;
+};
+
+export const deleteBooking = async (id) => {
+  const { data } = await axiosSecure.delete(`/bookings/${id}`);
+  return data;
+};

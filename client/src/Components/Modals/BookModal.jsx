@@ -3,8 +3,10 @@ import { Fragment } from "react";
 import { bookHouse } from "../../lib/apis";
 import { toast } from "react-hot-toast";
 import useAuth from "../../Hooks/useAuth";
+import useGetBooking from "../../Hooks/useGetBooking";
 const BookModal = ({ house, isOpen, closeBookModal }) => {
   const { user } = useAuth();
+  const { refetch } = useGetBooking();
   const { _id, title, rent, address, description } = house || {};
   const regex = /^(013|014|015|016|017|018|019)\d{8}$/;
   const handleAddHouse = async (e) => {
@@ -32,7 +34,7 @@ const BookModal = ({ house, isOpen, closeBookModal }) => {
     } else {
       toast.error("Something Went Wrong");
     }
-    closeAddModal();
+    closeBookModal();
     console.log(res);
   };
   return (
