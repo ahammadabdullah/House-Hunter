@@ -21,3 +21,8 @@ export const deleteHouse = async (id) => {
   const { data } = await axiosSecure.delete(`/houses/${id}`);
   return data;
 };
+
+export const AddHouse = async (houseData) => {
+  const { data } = await axiosSecure.post(`/houses`, houseData);
+  return data;
+};

@@ -2,22 +2,39 @@ import useAuth from "../../Hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import { getOwnerHouses } from "../../lib/apis";
 import TableRow from "./TableRow";
+import AddModal from "../../Components/Modals/AddModal";
+import { useState } from "react";
 
 const Owner = () => {
+  let [isOpen, setIsOpen] = useState(false);
+
   const { user } = useAuth();
   const { data, isLoading, refetch } = useQuery({
     queryKey: ["owner-houses"],
     queryFn: () => getOwnerHouses(user?.email),
   });
-  console.log(isLoading);
+  function closeAddModal() {
+    setIsOpen(false);
+  }
+
+  function openAddModal() {
+    setIsOpen(true);
+  }
   return (
     <div>
-      <h3>Owner Dashboard</h3>
-
-      <div class="relative overflow-x-auto">
-        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-          <thead class="text-xs text-primary uppercase  bg-secondary">
-            <tr>
+      <h3 className="text-center text-2xl py-5">Owner's Dashboard</h3>
+      <div className="flex justify-center">
+        <button
+          className="p-2 bg-fill hover:bg-secondary hover:text-primary rounded-md mb-5"
+          onClick={openAddModal}
+        >
+          Add House
+        </button>
+      </div>
+      <div class="relative overflow-x-auto rounded-md mb-10">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 ">
+          <thead class="text-xs text-primary uppercase  bg-secondary ">
+            <tr className="">
               <th scope="col" class="px-6 py-3">
                 Title
               </th>
@@ -43,6 +60,12 @@ const Owner = () => {
           </tbody>
         </table>
       </div>
+      <AddModal
+        closeAddModal={closeAddModal}
+        openAddModal={openAddModal}
+        refetch={refetch}
+        isOpen={isOpen}
+      />
     </div>
   );
 };

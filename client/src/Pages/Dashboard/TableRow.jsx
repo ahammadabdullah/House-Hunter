@@ -35,12 +35,20 @@ const TableRow = ({ house, refetch }) => {
         </td>
         <td class="px-6 py-4">{address}</td>
         <td class="px-6 py-4">
-          <button className="bg-secondary p-2 rounded" onClick={openEditModal}>
+          <button
+            className="bg-secondary p-2 rounded hover:text-primary"
+            onClick={openEditModal}
+          >
             Edit
           </button>
         </td>
         <td class="px-6 py-4">
-          <button onClick={handleDelete}>Delete</button>
+          <button
+            className="bg-secondary p-2 rounded hover:text-primary"
+            onClick={handleDelete}
+          >
+            Delete
+          </button>
         </td>
       </tr>
       <EditModal
