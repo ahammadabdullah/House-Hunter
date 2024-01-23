@@ -157,16 +157,19 @@ async function run() {
 
     // get all houses api
     app.get("/v1/houses", async (req, res) => {
+      console.log(req.query);
       const cursor = parseInt(req.query.cursor) || 0;
+      let filter = {};
+      if (req.query.title) {
+        filter.title = { $regex: req.query.title, $options: "i" };
+      }
       const pageSize = 10;
       const data = await houseCollection
-        .find({})
+        .find(filter)
         .skip(cursor)
         .limit(pageSize)
         .toArray();
       res.send({ data });
-      // const result = await houseCollection.find().toArray();
-      // res.status(200).send(result);
     });
     // add house api
     app.post("/v1/houses", verifyToken, async (req, res) => {
@@ -286,7 +289,7 @@ async function run() {
       res.status(200).send(result);
     });
     // get bookings by email api
-    app.get("/v1/bookings/:email", verifyToken, async (req, res) => {
+    app.get("/v1/bookings/:email", async (req, res) => {
       const result = await BookingCollection.find({
         renterEmail: req.params.email,
       }).toArray();

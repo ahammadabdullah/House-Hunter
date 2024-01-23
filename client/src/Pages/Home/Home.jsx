@@ -1,10 +1,12 @@
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { getAllHouses } from "../../lib/apis";
 import HouseCard from "./HouseCard";
-import { Fragment, useEffect } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 const Home = () => {
   const { ref, inView } = useInView();
+  const [query, setQuery] = useState("");
+
   const {
     status,
     data,
@@ -14,8 +16,8 @@ const Home = () => {
     fetchNextPage,
     hasNextPage,
   } = useInfiniteQuery({
-    queryKey: ["all-houses"],
-    queryFn: ({ pageParam = 0 }) => getAllHouses(pageParam),
+    queryKey: ["all-houses", query],
+    queryFn: ({ pageParam = 0 }) => getAllHouses(pageParam, query),
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages, lastPageParam) => {
       if (lastPage.data.length < 10) {
@@ -24,6 +26,7 @@ const Home = () => {
       return lastPageParam + 10;
     },
   });
+
   useEffect(() => {
     if (inView) {
       fetchNextPage();
@@ -31,6 +34,16 @@ const Home = () => {
   }, [inView]);
   return (
     <div className="max-w-7xl mx-auto">
+      <div className=" pt-5 mx-10">
+        <div>
+          <input
+            onChange={(e) => setQuery("title=" + e.target.value)}
+            type="text"
+            className="w-[300px] bg-fill rounded-md p-2"
+            placeholder="Search By Title"
+          />
+        </div>
+      </div>
       <div className="grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 p-5">
         {data?.pages?.map((group, i) => (
           <Fragment key={i}>
