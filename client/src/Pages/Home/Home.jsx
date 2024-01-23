@@ -8,6 +8,7 @@ const Home = () => {
   const { ref, inView } = useInView();
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState("");
+  const [range, setRange] = useState("");
 
   const {
     status,
@@ -18,8 +19,9 @@ const Home = () => {
     fetchNextPage,
     hasNextPage,
   } = useInfiniteQuery({
-    queryKey: ["all-houses", query, filter],
-    queryFn: ({ pageParam = 0 }) => getAllHouses(pageParam, query, filter),
+    queryKey: ["all-houses", query, filter, range],
+    queryFn: ({ pageParam = 0 }) =>
+      getAllHouses(pageParam, query, filter, range),
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages, lastPageParam) => {
       if (lastPage.data.length < 10) {
@@ -45,7 +47,7 @@ const Home = () => {
             placeholder="Search By Title"
           />
         </div>
-        <FilterDropDown setFilter={setFilter} />
+        <FilterDropDown setFilter={setFilter} setRange={setRange} />
       </div>
       <div className="grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 p-5">
         {data?.pages?.map((group, i) => (

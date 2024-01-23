@@ -3,9 +3,9 @@ import useAxiosSecure from "../Hooks/useAxiosSecure";
 const axiosPublic = useAxiosPublic();
 const axiosSecure = useAxiosSecure();
 
-export const getAllHouses = async (pageParam, query, filter) => {
+export const getAllHouses = async (pageParam, query, filter, range) => {
   const { data } = await axiosPublic(
-    `/houses?cursor=${pageParam}&${query}&sort=${filter}`
+    `/houses?cursor=${pageParam}&${query}&sort=${filter}&range=${range}`
   );
   return data;
 };

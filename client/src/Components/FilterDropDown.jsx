@@ -1,8 +1,12 @@
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
-
-const FilterDropDown = ({ setFilter }) => {
+import MultiRangeSlider from "./multiRangeSlider/MultiRangeSlider";
+const FilterDropDown = ({ setFilter, setRange }) => {
+  const handleRangeSliderChange = (min, max) => {
+    setRange(`${min}-${max}`);
+    console.log(`${min}-${max}`);
+  };
   return (
     <div className="text-right w-[150px] ">
       <Menu as="div" className="relative inline-block text-left">
@@ -24,11 +28,14 @@ const FilterDropDown = ({ setFilter }) => {
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items className="absolute right-0 mt-2 w-[150px] origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
+          <Menu.Items className="absolute right-0 mt-2 w-[250px] origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
             <div className="px-1 py-1 ">
               <Menu.Item>
                 <button
-                  onClick={() => setFilter("city")}
+                  onClick={() => {
+                    setFilter("city");
+                    setRange("");
+                  }}
                   className={
                     "text-gray-900  rounded-md px-2 py-2 text-sm hover:bg-fill w-full text-left hover:text-primary"
                   }
@@ -39,7 +46,10 @@ const FilterDropDown = ({ setFilter }) => {
               <br />
               <Menu.Item>
                 <button
-                  onClick={() => setFilter("bedrooms")}
+                  onClick={() => {
+                    setFilter("bedrooms");
+                    setRange("");
+                  }}
                   className={
                     "text-gray-900  rounded-md px-2 py-2 text-sm hover:bg-fill w-full text-left hover:text-primary"
                   }
@@ -80,6 +90,14 @@ const FilterDropDown = ({ setFilter }) => {
                   By Availability Date
                 </button>
               </Menu.Item>
+              <label className="text-sm px-2 py-2 text-gray-900">
+                By Price:
+              </label>
+              <MultiRangeSlider
+                min={0}
+                max={10000}
+                onChange={({ min, max }) => handleRangeSliderChange(min, max)}
+              />
               <br />
             </div>
           </Menu.Items>
