@@ -5,7 +5,7 @@ const NavBar = () => {
   const { user } = useAuth();
   return (
     <div className="bg-fill">
-      <div className="py-5  flex items-center justify-between max-w-7xl mx-auto">
+      <div className="py-5 pl-5 pr-10  flex items-center justify-between max-w-7xl mx-auto">
         <div>
           <Link
             className="text-primary text-3xl font-bold cursor-default"
@@ -14,7 +14,7 @@ const NavBar = () => {
             House Hunter
           </Link>
         </div>
-        <div className=" flex justify-center gap-5 ">
+        <div className=" md:flex justify-center gap-5 hidden">
           <NavLink
             className={({ isActive }) =>
               isActive

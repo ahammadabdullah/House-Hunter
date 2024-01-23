@@ -2,7 +2,7 @@ import { Menu, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import useAuth from "../Hooks/useAuth";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 const ProfileDropDown = () => {
@@ -18,7 +18,7 @@ const ProfileDropDown = () => {
     }
   };
   return (
-    <div className="text-right w-20 ">
+    <div className="text-right w-20 ml-r">
       <Menu as="div" className="relative inline-block text-left">
         <div>
           <Menu.Button className="inline-flex w-full justify-center rounded-md bg-secondary px-4 py-2 text-sm font-medium text-primary  focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
@@ -61,6 +61,32 @@ const ProfileDropDown = () => {
                     {user.role}
                   </button>
                 )}
+              </Menu.Item>
+              <Menu.Item>
+                <div className="flex-col flex md:hidden text-sm">
+                  <NavLink
+                    className={({ isActive }) =>
+                      isActive
+                        ? "bg-secondary text-primary p-2 rounded-md font-medium"
+                        : "p-2 hover:text-primary hover:bg-secondary hover:font-medium rounded-md"
+                    }
+                    to="/"
+                  >
+                    Home
+                  </NavLink>
+                  {user && (
+                    <NavLink
+                      className={({ isActive }) =>
+                        isActive
+                          ? "bg-secondary text-primary p-2 rounded-md font-medium"
+                          : "p-2 hover:text-primary hover:bg-secondary hover:font-medium rounded-md"
+                      }
+                      to="/dashboard"
+                    >
+                      Dashboard
+                    </NavLink>
+                  )}
+                </div>
               </Menu.Item>
             </div>
             <div className="px-1 py-1">

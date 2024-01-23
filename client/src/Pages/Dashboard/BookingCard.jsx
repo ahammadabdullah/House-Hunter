@@ -12,7 +12,7 @@ const BookingCard = ({ detail, refetch }) => {
     }
   };
   return (
-    <div className="bg-fill w-[300px] rounded-md p-4 space-y-1">
+    <div className="bg-fill w-[300px] mx-auto rounded-md p-4 space-y-1">
       <h3 className="font-medium text-xl">{detail.title}</h3>
       <h3>Address: {detail.address}</h3>
       <h3>Rent: {detail.rent} BDT</h3>

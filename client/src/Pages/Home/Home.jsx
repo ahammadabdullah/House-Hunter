@@ -38,7 +38,7 @@ const Home = () => {
   }, [inView]);
   return (
     <div className="max-w-7xl mx-auto">
-      <div className=" pt-5 mx-10 flex justify-between">
+      <div className=" pt-5 mx-auto flex justify-between items-center flex-col md:flex-row w-[90%] gap-5 ">
         <div>
           <input
             onChange={(e) => setQuery("title=" + e.target.value)}

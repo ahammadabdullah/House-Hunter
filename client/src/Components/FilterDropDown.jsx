@@ -7,7 +7,7 @@ const FilterDropDown = ({ setFilter, setRange }) => {
     setRange(`${min}-${max}`);
   };
   return (
-    <div className="text-right w-[150px] ">
+    <div className="text-right w-[100px] ">
       <Menu as="div" className="relative inline-block text-left">
         <div>
           <Menu.Button className="inline-flex w-full justify-center rounded-md bg-secondary px-4 py-2 text-sm font-medium text-primary  focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
