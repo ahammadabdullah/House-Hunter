@@ -3,9 +3,11 @@ import { getAllHouses } from "../../lib/apis";
 import HouseCard from "./HouseCard";
 import { Fragment, useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
+import FilterDropDown from "../../Components/FilterDropDown";
 const Home = () => {
   const { ref, inView } = useInView();
   const [query, setQuery] = useState("");
+  const [filter, setFilter] = useState("");
 
   const {
     status,
@@ -16,8 +18,8 @@ const Home = () => {
     fetchNextPage,
     hasNextPage,
   } = useInfiniteQuery({
-    queryKey: ["all-houses", query],
-    queryFn: ({ pageParam = 0 }) => getAllHouses(pageParam, query),
+    queryKey: ["all-houses", query, filter],
+    queryFn: ({ pageParam = 0 }) => getAllHouses(pageParam, query, filter),
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages, lastPageParam) => {
       if (lastPage.data.length < 10) {
@@ -34,7 +36,7 @@ const Home = () => {
   }, [inView]);
   return (
     <div className="max-w-7xl mx-auto">
-      <div className=" pt-5 mx-10">
+      <div className=" pt-5 mx-10 flex justify-between">
         <div>
           <input
             onChange={(e) => setQuery("title=" + e.target.value)}
@@ -43,6 +45,7 @@ const Home = () => {
             placeholder="Search By Title"
           />
         </div>
+        <FilterDropDown setFilter={setFilter} />
       </div>
       <div className="grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 p-5">
         {data?.pages?.map((group, i) => (

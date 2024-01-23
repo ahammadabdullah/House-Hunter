@@ -160,12 +160,22 @@ async function run() {
       console.log(req.query);
       const cursor = parseInt(req.query.cursor) || 0;
       let filter = {};
+      let sort = {
+        // title: 1,
+      };
+
       if (req.query.title) {
         filter.title = { $regex: req.query.title, $options: "i" };
       }
+      if (req.query.sort) {
+        sort = {
+          [req.query.sort]: 1,
+        };
+        console.log(sort);
+      }
       const pageSize = 10;
       const data = await houseCollection
-        .find(filter)
+        .find(filter, { sort })
         .skip(cursor)
         .limit(pageSize)
         .toArray();
