@@ -2,6 +2,7 @@ import useAxiosPublic from "../Hooks/useAxiosPublic";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
 const axiosPublic = useAxiosPublic();
 const axiosSecure = useAxiosSecure();
+
 export const getAllHouses = async (pageParam) => {
   const { data } = await axiosPublic(`/houses?cursor=${pageParam}`);
   return data;
@@ -40,4 +41,16 @@ export const getBookings = async (email) => {
 export const deleteBooking = async (id) => {
   const { data } = await axiosSecure.delete(`/bookings/${id}`);
   return data;
+};
+
+export const logout = async (email) => {
+  try {
+    const res = await axiosPublic.put("/logout", { email });
+    if (res.data.success === true) {
+      localStorage.removeItem("email");
+    }
+    return res.data;
+  } catch (err) {
+    return err;
+  }
 };

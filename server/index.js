@@ -15,6 +15,16 @@ app.use(
 );
 app.use(express.json());
 app.use(cookieParser());
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "http://localhost:5173");
+  res.header("Access-Control-Allow-Credentials", "true");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
+  next();
+});
 
 const uri = `mongodb+srv://${process.env.mongoUser}:${process.env.mongoPass}@cluster0.mjl1d34.mongodb.net/?retryWrites=true&w=majority`;
 
@@ -26,6 +36,20 @@ const client = new MongoClient(uri, {
   },
 });
 
+// verify token
+const verifyToken = async (req, res, next) => {
+  const token = req.cookies?.token;
+  if (!token) {
+    return res.status(403).send({ message: " access forbidden" });
+  }
+  jwt.verify(token, process.env.secretKey, (err, decoded) => {
+    if (err) {
+      return res.status(401).send({ message: "unauthorized access" });
+    }
+    req.user = decoded;
+    next();
+  });
+};
 async function run() {
   try {
     // collections
@@ -50,8 +74,20 @@ async function run() {
           role,
           isLoggedIn: true,
         });
+        const token = jwt.sign(
+          { email: email, role: role },
+          process.env.secretKey,
+          {
+            expiresIn: "1h",
+          }
+        );
         res
           .status(200)
+          .cookie("token", token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: "none",
+          })
           .send({ success: true, message: "User created successfully" });
       }
     });
@@ -76,7 +112,7 @@ async function run() {
             .status(200)
             .cookie("token", token, {
               httpOnly: true,
-              secure: false,
+              secure: true,
               sameSite: "none",
             })
             .send({ success: true, message: "Login successful" });
@@ -179,7 +215,7 @@ async function run() {
       res.status(200).send(result);
     });
     // get owner houses by email api
-    app.get("/v1/houses/owner/:email", async (req, res) => {
+    app.get("/v1/houses/owner/:email", verifyToken, async (req, res) => {
       const result = await houseCollection
         .find({
           email: req.params.email,

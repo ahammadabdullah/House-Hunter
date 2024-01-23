@@ -20,7 +20,6 @@ const Owner = () => {
   function openAddModal() {
     setIsOpen(true);
   }
-  console.log(data);
   return (
     <div>
       <h3 className="text-center text-2xl py-5">Owner's Dashboard</h3>

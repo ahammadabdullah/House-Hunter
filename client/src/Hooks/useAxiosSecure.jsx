@@ -1,4 +1,5 @@
 import axios from "axios";
+import { logout } from "../lib/apis";
 
 const axiosSecure = axios.create({
   baseURL: import.meta.env.VITE_baseURL,
@@ -6,21 +7,21 @@ const axiosSecure = axios.create({
 });
 
 // intercept response and check for unauthorized responses.
-// axiosSecure.interceptors.response.use(
-//   (response) => response,
-//   async (error) => {
-//     console.log("Error tracked in the interceptor", error.response);
-//     if (
-//       error.response &&
-//       (error.response.status === 401 || error.response.status === 403)
-//     ) {
-//       await axiosSecure.post("/logout");
-//       window.location.replace("/login");
-//     }
+axiosSecure.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    console.log("Error tracked in the interceptor", error.response);
+    if (
+      error.response &&
+      (error.response.status === 401 || error.response.status === 403)
+    ) {
+      await logout(localStorage.getItem("email"));
+      window.location.replace("/login");
+    }
 
-//     return Promise.reject(error);
-//   }
-// );
+    return Promise.reject(error);
+  }
+);
 
 const useAxiosSecure = () => {
   return axiosSecure;

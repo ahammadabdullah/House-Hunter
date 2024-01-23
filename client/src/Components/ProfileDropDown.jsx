@@ -14,7 +14,7 @@ const ProfileDropDown = () => {
       toast.success("Logout Successful");
       navigate("/");
     } else {
-      toast.error(res.response.data.message);
+      toast.error(res?.response?.data?.message);
     }
   };
   return (

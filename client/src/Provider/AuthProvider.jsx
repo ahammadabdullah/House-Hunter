@@ -10,8 +10,8 @@ const AuthProvider = ({ children }) => {
 
   const loginWithEmail = async (loginInfo) => {
     try {
-      setLoading(true);
       const res = await axiosPublic.put("/login", loginInfo);
+      console.log(res);
       if (res.status === 200) {
         const uData = await axiosPublic.get(`/users/${loginInfo.email}`);
         localStorage.setItem("email", loginInfo.email);
@@ -37,7 +37,6 @@ const AuthProvider = ({ children }) => {
   };
   const registerWithEmail = async (userData) => {
     try {
-      setLoading(true);
       const res = await axiosPublic.post("/register", userData);
       if (res.status === 200) {
         const uData = await axiosPublic.get(`/users/${userData?.email}`);
@@ -59,6 +58,9 @@ const AuthProvider = ({ children }) => {
         setLoading(false);
       };
       checkUser();
+    } else {
+      setUser(null);
+      setLoading(false);
     }
   }, []);
   const value = { loginWithEmail, logout, registerWithEmail, user, loading };
