@@ -26,3 +26,8 @@ export const AddHouse = async (houseData) => {
   const { data } = await axiosSecure.post(`/houses`, houseData);
   return data;
 };
+
+export const bookHouse = async (bookingData) => {
+  const { data } = await axiosSecure.post(`/bookings`, bookingData);
+  return data;
+};
