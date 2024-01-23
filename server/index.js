@@ -169,7 +169,7 @@ async function run() {
       // res.status(200).send(result);
     });
     // add house api
-    app.post("/v1/houses", async (req, res) => {
+    app.post("/v1/houses", verifyToken, async (req, res) => {
       const {
         email,
         name,
@@ -224,7 +224,7 @@ async function run() {
       res.status(200).send(result);
     });
     // update house by id api
-    app.put("/v1/houses/:id", async (req, res) => {
+    app.put("/v1/houses/:id", verifyToken, async (req, res) => {
       const {
         address,
         city,
@@ -257,14 +257,14 @@ async function run() {
       res.status(200).send(result);
     });
     // delete house by id api
-    app.delete("/v1/houses/:id", async (req, res) => {
+    app.delete("/v1/houses/:id", verifyToken, async (req, res) => {
       const result = await houseCollection.deleteOne({
         _id: new ObjectId(req.params.id),
       });
       res.status(200).send(result);
     });
     // book house by email api
-    app.post("/v1/bookings", async (req, res) => {
+    app.post("/v1/bookings", verifyToken, async (req, res) => {
       const {
         houseId,
         title,
@@ -286,14 +286,14 @@ async function run() {
       res.status(200).send(result);
     });
     // get bookings by email api
-    app.get("/v1/bookings/:email", async (req, res) => {
+    app.get("/v1/bookings/:email", verifyToken, async (req, res) => {
       const result = await BookingCollection.find({
         renterEmail: req.params.email,
       }).toArray();
       res.status(200).send(result);
     });
     // delete booking by id api
-    app.delete("/v1/bookings/:id", async (req, res) => {
+    app.delete("/v1/bookings/:id", verifyToken, async (req, res) => {
       const result = await BookingCollection.deleteOne({
         _id: new ObjectId(req.params.id),
       });
