@@ -9,14 +9,22 @@ const port = process.env.PORT || 3000;
 const app = express();
 app.use(
   cors({
-    origin: ["http://localhost:5173"],
+    origin: [
+      "http://localhost:5173",
+      "https://house-hunter-ahammad.web.app",
+      "https://house-hunter-ahammad.firebaseapp.com",
+    ],
     credentials: true,
   })
 );
 app.use(express.json());
 app.use(cookieParser());
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "http://localhost:5173");
+  res.header(
+    "Access-Control-Allow-Origin",
+    "http://localhost:5173",
+    "https://house-hunter-ahammad.web.app/"
+  );
   res.header("Access-Control-Allow-Credentials", "true");
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
   res.header(
@@ -157,13 +165,15 @@ async function run() {
 
     // get all houses api
     app.get("/v1/houses", async (req, res) => {
-      console.log(req.query);
       const cursor = parseInt(req.query.cursor) || 0;
       let filter = {};
-      let sort = {
-        // title: 1,
-      };
-
+      let sort = {};
+      if (req.query.range) {
+        const [min, max] = req.query.range.split("-");
+        const maxRent = parseInt(max);
+        const minRent = parseInt(min);
+        filter = { rent: { $gte: minRent, $lte: maxRent } };
+      }
       if (req.query.title) {
         filter.title = { $regex: req.query.title, $options: "i" };
       }
@@ -171,7 +181,6 @@ async function run() {
         sort = {
           [req.query.sort]: 1,
         };
-        console.log(sort);
       }
       const pageSize = 10;
       const data = await houseCollection
