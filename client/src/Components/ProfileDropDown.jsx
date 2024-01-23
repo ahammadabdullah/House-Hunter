@@ -2,10 +2,22 @@ import { Menu, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import useAuth from "../Hooks/useAuth";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const ProfileDropDown = () => {
   const { user, logout } = useAuth();
-
+  const navigate = useNavigate();
+  const handleLogout = async () => {
+    const res = await logout(user?.email);
+    if (res.success === true) {
+      toast.success("Logout Successful");
+      navigate("/");
+    } else {
+      toast.error(res.response.data.message);
+    }
+  };
+  console.log(user);
   return (
     <div className="text-right w-56 ">
       <Menu as="div" className="relative inline-block text-left">
@@ -64,7 +76,7 @@ const ProfileDropDown = () => {
               <Menu.Item>
                 {({ active }) => (
                   <button
-                    onClick={() => logout()}
+                    onClick={handleLogout}
                     className={`${
                       active ? "bg-primary text-white" : "text-gray-900"
                     } group flex w-full items-center rounded-md px-2 py-2 text-sm`}

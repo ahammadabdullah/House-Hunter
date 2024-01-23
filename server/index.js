@@ -116,7 +116,6 @@ async function run() {
         },
         { projection }
       );
-      console.log(result);
       res.status(200).send(result);
     });
 
@@ -179,11 +178,18 @@ async function run() {
       });
       res.status(200).send(result);
     });
+    // get owner houses by email api
+    app.get("/v1/houses/owner/:email", async (req, res) => {
+      const result = await houseCollection
+        .find({
+          email: req.params.email,
+        })
+        .toArray();
+      res.status(200).send(result);
+    });
     // update house by id api
     app.put("/v1/houses/:id", async (req, res) => {
       const {
-        email,
-        name,
         address,
         city,
         bedrooms,
@@ -192,7 +198,6 @@ async function run() {
         imgURL,
         availabilityDate,
         rent,
-        number,
         title,
         description,
       } = req.body;
@@ -200,8 +205,6 @@ async function run() {
         { _id: new ObjectId(req.params.id) },
         {
           $set: {
-            email,
-            name,
             address,
             city,
             bedrooms,
@@ -210,7 +213,6 @@ async function run() {
             imgURL,
             availabilityDate,
             rent,
-            number,
             title,
             description,
           },

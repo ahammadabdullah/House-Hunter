@@ -6,16 +6,13 @@ export const AuthContext = createContext(null);
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const axiosPublic = useAxiosPublic();
-  const getUser = async (email) => {
-    const res = await axiosPublic.get(`/users/:${email}`);
-    return res.data;
-  };
-  const loginWithEmail = async (email, password) => {
+
+  const loginWithEmail = async (loginInfo) => {
     try {
-      const res = await axiosPublic.put("/login", { email, password });
+      const res = await axiosPublic.put("/login", loginInfo);
       if (res.status === 200) {
-        const uData = await axiosPublic.get(`/users/${email}`);
-        localStorage.setItem("email", email);
+        const uData = await axiosPublic.get(`/users/${loginInfo.email}`);
+        localStorage.setItem("email", loginInfo.email);
         setUser(uData.data);
       }
       return res.data;
@@ -23,10 +20,11 @@ const AuthProvider = ({ children }) => {
       return err;
     }
   };
-  const logout = async () => {
+  const logout = async (email) => {
     try {
-      const res = await axiosPublic.put("/logout");
-      if (res.status === 200) {
+      const res = await axiosPublic.put("/logout", email);
+      console.log(res);
+      if (res.data.success === true) {
         setUser(null);
         localStorage.removeItem("email");
       }
@@ -35,18 +33,12 @@ const AuthProvider = ({ children }) => {
       return err;
     }
   };
-  const registerWithEmail = async (email, password, name, number, role) => {
+  const registerWithEmail = async (userData) => {
     try {
-      const res = await axiosPublic.post("/register", {
-        email,
-        password,
-        name,
-        number,
-        role,
-      });
+      const res = await axiosPublic.post("/register", userData);
       if (res.status === 200) {
-        const uData = await axiosPublic.get(`/users/${email}`);
-        localStorage.setItem("email", email);
+        const uData = await axiosPublic.get(`/users/${userData?.email}`);
+        localStorage.setItem("email", userData.email);
         setUser(uData.data);
       }
       return res.data;

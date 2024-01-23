@@ -20,6 +20,7 @@ const Owner = () => {
   function openAddModal() {
     setIsOpen(true);
   }
+  console.log(data);
   return (
     <div>
       <h3 className="text-center text-2xl py-5">Owner's Dashboard</h3>
@@ -32,33 +33,35 @@ const Owner = () => {
         </button>
       </div>
       <div class="relative overflow-x-auto rounded-md mb-10">
-        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 ">
-          <thead class="text-xs text-primary uppercase  bg-secondary ">
-            <tr className="">
-              <th scope="col" class="px-6 py-3">
-                Title
-              </th>
-              <th scope="col" class="px-6 py-3">
-                Image
-              </th>
-              <th scope="col" class="px-6 py-3">
-                Address
-              </th>
-              <th scope="col" class="px-6 py-3">
-                Edit
-              </th>
-              <th scope="col" class="px-6 py-3">
-                Delete
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {isLoading && <h3>Loading....</h3>}
-            {data?.map((house) => (
-              <TableRow key={house._id} house={house} refetch={refetch} />
-            ))}
-          </tbody>
-        </table>
+        {data?.length > 0 && (
+          <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 ">
+            <thead class="text-xs text-primary uppercase  bg-secondary ">
+              <tr className="">
+                <th scope="col" class="px-6 py-3">
+                  Title
+                </th>
+                <th scope="col" class="px-6 py-3">
+                  Image
+                </th>
+                <th scope="col" class="px-6 py-3">
+                  Address
+                </th>
+                <th scope="col" class="px-6 py-3">
+                  Edit
+                </th>
+                <th scope="col" class="px-6 py-3">
+                  Delete
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {isLoading && <h3>Loading....</h3>}
+              {data?.map((house) => (
+                <TableRow key={house._id} house={house} refetch={refetch} />
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
       <AddModal
         closeAddModal={closeAddModal}
