@@ -32,24 +32,24 @@ const Owner = () => {
           Add House
         </button>
       </div>
-      <div class="relative overflow-x-auto rounded-md mb-10">
+      <div className="relative overflow-x-auto rounded-md mb-10">
         {data?.length > 0 && (
-          <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 ">
-            <thead class="text-xs text-primary uppercase  bg-secondary ">
+          <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 ">
+            <thead className="text-xs text-primary uppercase  bg-secondary ">
               <tr className="">
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" className="px-6 py-3">
                   Title
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" className="px-6 py-3">
                   Image
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" className="px-6 py-3">
                   Address
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" className="px-6 py-3">
                   Edit
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" className="px-6 py-3">
                   Delete
                 </th>
               </tr>

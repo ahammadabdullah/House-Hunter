@@ -22,8 +22,7 @@ const AuthProvider = ({ children }) => {
   };
   const logout = async (email) => {
     try {
-      const res = await axiosPublic.put("/logout", email);
-      console.log(res);
+      const res = await axiosPublic.put("/logout", { email });
       if (res.data.success === true) {
         setUser(null);
         localStorage.removeItem("email");
