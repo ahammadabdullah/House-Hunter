@@ -4,10 +4,6 @@ import HouseCard from "./HouseCard";
 import { Fragment, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 const Home = () => {
-  // const { data, isLoading } = useQuery({
-  //   queryKey: ["all-houses"],
-  //   queryFn: () => getAllHouses(),
-  // });
   const { ref, inView } = useInView();
   const {
     status,

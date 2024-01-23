@@ -6,8 +6,6 @@ import useAuth from "../Hooks/useAuth";
 const ProfileDropDown = () => {
   const { user, logout } = useAuth();
 
-  console.log("rendering");
-
   return (
     <div className="text-right w-56 ">
       <Menu as="div" className="relative inline-block text-left">
