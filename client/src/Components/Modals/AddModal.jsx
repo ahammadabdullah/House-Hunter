@@ -20,7 +20,7 @@ const AddModal = ({ isOpen, closeAddModal, refetch }) => {
     const roomSize = form.roomSize.value;
     const imgURL = form.imgURL.value;
     const availabilityDate = form.availabilityDate.value;
-    const rent = form.rent.value;
+    const rentStr = form.rent.value;
     const description = form.description.value;
     const isValid = regex.test(number);
     if (!isValid) {
@@ -35,7 +35,7 @@ const AddModal = ({ isOpen, closeAddModal, refetch }) => {
       roomSize,
       imgURL,
       availabilityDate,
-      rent,
+      rent: parseInt(rentStr),
       title,
       description,
       number,

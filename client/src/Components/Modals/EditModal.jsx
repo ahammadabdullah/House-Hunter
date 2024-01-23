@@ -28,7 +28,7 @@ const EditModal = ({ isOpen, closeEditModal, house, refetch }) => {
     const roomSize = form.roomSize.value;
     const imgURL = form.imgURL.value;
     const availabilityDate = form.availabilityDate.value;
-    const rent = form.rent.value;
+    const rentStr = form.rent.value;
     const description = form.description.value;
     const updatedData = {
       address,
@@ -38,7 +38,7 @@ const EditModal = ({ isOpen, closeEditModal, house, refetch }) => {
       roomSize,
       imgURL,
       availabilityDate,
-      rent,
+      rent: parseInt(rentStr),
       title,
       description,
     };
