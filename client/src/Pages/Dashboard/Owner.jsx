@@ -5,12 +5,11 @@ import TableRow from "./TableRow";
 
 const Owner = () => {
   const { user } = useAuth();
-
-  const { data } = useQuery({
+  const { data, isLoading, refetch } = useQuery({
     queryKey: ["owner-houses"],
     queryFn: () => getOwnerHouses(user?.email),
   });
-  console.log(data);
+  console.log(isLoading);
   return (
     <div>
       <h3>Owner Dashboard</h3>
@@ -37,8 +36,9 @@ const Owner = () => {
             </tr>
           </thead>
           <tbody>
+            {isLoading && <h3>Loading....</h3>}
             {data?.map((house) => (
-              <TableRow key={house._id} house={house} />
+              <TableRow key={house._id} house={house} refetch={refetch} />
             ))}
           </tbody>
         </table>
