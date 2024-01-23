@@ -2,7 +2,7 @@ import { Link, NavLink } from "react-router-dom";
 import useAuth from "../Hooks/useAuth";
 import ProfileDropDown from "./ProfileDropDown";
 const NavBar = () => {
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
   console.log(user, "user");
   return (
     <div className="bg-fill">

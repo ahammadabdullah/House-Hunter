@@ -17,7 +17,6 @@ const ProfileDropDown = () => {
       toast.error(res.response.data.message);
     }
   };
-  console.log(user);
   return (
     <div className="text-right w-56 ">
       <Menu as="div" className="relative inline-block text-left">
